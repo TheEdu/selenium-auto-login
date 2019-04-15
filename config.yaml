@@ -1,0 +1,41 @@
+webdriver:
+  path: chrome32/chromedriver
+  # executable_path: operadriver_win64/operadriver
+  # executable_path: firefox64/geckodriver
+pages:
+  - name: server1
+    url: https://ip1:port1/path1
+    login:
+      is_logged: False
+      user_name_element_id: 
+      pass_element_id: 
+      login_button_id: loginButton
+      user_name_element_name: username
+      pass_element_name: password
+      login_button_name: 
+      user_name: user_name
+      password: password
+  - name: server1 - admin
+    url: https://ip1:port1/path2
+    login:
+      is_logged: True
+      user_name_element_id: 
+      pass_element_id: 
+      login_button_id: loginButton
+      user_name_element_name: username
+      pass_element_name: password
+      login_button_name: 
+      user_name: user_name
+      password: password
+  - name: server2
+    url: https://ip2:port2/manage/hotspot/site/default/vouchers/1/50
+    login:
+      is_logged: True
+      user_name_element_id: username123
+      pass_element_id: username412
+      login_button_id: loginButton
+      user_name_element_name: 
+      pass_element_name: 
+      login_button_name: 
+      user_name: user_name
+      password: password
