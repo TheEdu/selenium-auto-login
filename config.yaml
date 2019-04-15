@@ -3,7 +3,7 @@ webdriver:
   # executable_path: operadriver_win64/operadriver
   # executable_path: firefox64/geckodriver
 pages:
-  - name: server1
+  server1:
     url: https://ip1:port1/path1
     login:
       is_logged: False
@@ -15,7 +15,7 @@ pages:
       login_button_name: 
       user_name: user_name
       password: password
-  - name: server1 - admin
+  server1_Admin:
     url: https://ip1:port1/path2
     login:
       is_logged: True
@@ -27,7 +27,7 @@ pages:
       login_button_name: 
       user_name: user_name
       password: password
-  - name: server2
+  server2:
     url: https://ip2:port2/manage/hotspot/site/default/vouchers/1/50
     login:
       is_logged: True

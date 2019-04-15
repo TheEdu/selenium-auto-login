@@ -1,3 +1,4 @@
+import argparse
 from selenium import webdriver
 from common import config
 
@@ -16,30 +17,31 @@ def _get_element(driver,
 
 
 def login_one_page(driver, page):
+    page_url = page['url']
+    login_info = page['login']
+    print('getting {}'.format(page_url))
     try:
+        driver.get(page_url)
 
-        print('login {}'.format(page['name']))
-        driver.get(page['url'])
-
-        if not page['login']['is_logged']:
+        if not login_info['is_logged']:
             user = _get_element(driver,
-                                page['login']['user_name_element_id'],
-                                page['login']['user_name_element_name'],
+                                login_info['user_name_element_id'],
+                                login_info['user_name_element_name'],
                                 '\tUser Name Element (Name or ID) is not configured')
 
             password = _get_element(driver,
-                                    page['login']['pass_element_id'],
-                                    page['login']['pass_element_name'],
+                                    login_info['pass_element_id'],
+                                    login_info['pass_element_name'],
                                     '\tPassword Element (Name or ID) is not configured')
 
-            login = _get_element(driver,
-                                 page['login']['login_button_id'],
-                                 page['login']['login_button_name'],
-                                 '\tLogin Element (Name or ID) is not configured')
+            login_button = _get_element(driver,
+                                        login_info['login_button_id'],
+                                        login_info['login_button_name'],
+                                        '\tLogin Element (Name or ID) is not configured')
 
-            user.send_keys(page['login']['user_name'])
-            password.send_keys(page['login']['password'])
-            login.click()
+            user.send_keys(login_info['user_name'])
+            password.send_keys(login_info['password'])
+            login_button.click()
     except ValueError as e:
         print(e)
     except Exception as e:
@@ -54,17 +56,29 @@ def login_all_pages(driver, pages):
                                   .format(index))
             driver.switch_to.window("tab{}".format(index))
 
+        page = config()['pages'][page]
         login_one_page(driver, page)
 
 
 if __name__ == '__main__':
     driver = None
+    parser = argparse.ArgumentParser()
+    page_choices = config()['pages'].keys()
+
+    parser.add_argument('-l',
+                        '--pages',
+                        nargs='+',
+                        help='Pages to login',
+                        choices=page_choices,
+                        default=page_choices,)
+
+    pages_selected = parser.parse_args().pages
 
     try:
         webdriver_path = config()['webdriver']['path']
         driver = webdriver.Chrome(executable_path=webdriver_path)
         # login_one_page(driver, config()['pages'][0])
-        login_all_pages(driver, config()['pages'])
+        login_all_pages(driver, pages_selected)
     finally:
         pass
         # driver.quit() # close web browser
