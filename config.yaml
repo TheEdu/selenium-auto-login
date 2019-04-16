@@ -1,7 +1,7 @@
 webdriver:
   path: chrome32/chromedriver
-  # executable_path: operadriver_win64/operadriver
-  # executable_path: firefox64/geckodriver
+  # path: operadriver_win64/operadriver
+  # path: firefox64/geckodriver
 pages:
   server1:
     url: https://ip1:port1/path1
